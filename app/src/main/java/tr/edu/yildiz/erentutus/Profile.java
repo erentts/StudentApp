@@ -17,16 +17,23 @@ public class Profile extends AppCompatActivity {
     private String username;
     private String password;
 
+    public void getInputs(){
+        buttonLogout = (Button) findViewById(R.id.buttonLogout);
+        textViewMessage = (TextView) findViewById(R.id.textViewMessage);
+    }
+
+    public void getSharedInformation(){
+        sp = getSharedPreferences("LogInInformation",MODE_PRIVATE);
+        editor = sp.edit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        buttonLogout = (Button) findViewById(R.id.buttonLogout);
-        textViewMessage = (TextView) findViewById(R.id.textViewMessage);
-
-        sp = getSharedPreferences("LogInInformation",MODE_PRIVATE);
-        editor = sp.edit();
+        getInputs();
+        getSharedInformation();
 
         username = sp.getString("username","no username");
         password = sp.getString("password","no password");
@@ -36,10 +43,6 @@ public class Profile extends AppCompatActivity {
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*editor.remove("username");
-                editor.remove("password");
-                editor.commit();*/
-
                 startActivity(new Intent(Profile.this,MainActivity.class));
                 finish();
             }
