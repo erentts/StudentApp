@@ -15,17 +15,7 @@ public class Profile extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private String username;
-    private String password;
 
-    public void getInputs(){
-        buttonLogout = (Button) findViewById(R.id.buttonLogout);
-        textViewMessage = (TextView) findViewById(R.id.textViewMessage);
-    }
-
-    public void getSharedInformation(){
-        sp = getSharedPreferences("LogInInformation",MODE_PRIVATE);
-        editor = sp.edit();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +26,6 @@ public class Profile extends AppCompatActivity {
         getSharedInformation();
 
         username = sp.getString("username","no username");
-        password = sp.getString("password","no password");
 
         textViewMessage.setText("Hi, "+ username);
 
@@ -47,5 +36,15 @@ public class Profile extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void getInputs(){
+        buttonLogout = (Button) findViewById(R.id.buttonLogout);
+        textViewMessage = (TextView) findViewById(R.id.textViewMessage);
+    }
+
+    public void getSharedInformation(){
+        sp = getSharedPreferences("LogInInformation",MODE_PRIVATE);
+        editor = sp.edit();
     }
 }

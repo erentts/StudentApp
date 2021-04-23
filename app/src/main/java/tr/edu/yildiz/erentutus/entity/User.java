@@ -1,5 +1,7 @@
 package tr.edu.yildiz.erentutus.entity;
 
+import java.util.ArrayList;
+
 public class User {
     private String Name;
     private String Surname;
@@ -7,16 +9,19 @@ public class User {
     private String Email;
     private String Phone;
     private String BirthDate;
-    private String Password;
+    private String PasswordHash;
+    private String PasswordSalt;
+    public static ArrayList<User> users = new ArrayList<User>();
 
-    public User(String name, String surname,String username, String email, String phone, String birthDate, String password) {
+    public User(String name, String surname, String username, String email, String phone, String birthDate, String passwordHash, String passwordSalt) {
         Name = name;
         Surname = surname;
         Username = username;
         Email = email;
         Phone = phone;
         BirthDate = birthDate;
-        Password = password;
+        PasswordHash = passwordHash;
+        PasswordSalt = passwordSalt;
     }
 
     public String getName() {
@@ -67,11 +72,27 @@ public class User {
         this.BirthDate = birthDate;
     }
 
-    public String getPassword() {
-        return Password;
+    public String getPasswordHash() {
+        return PasswordHash;
     }
 
-    public void setPassword(String password) {
-        Password = password;
+    public void setPasswordHash(String passwordHash) {
+        PasswordHash = passwordHash;
+    }
+
+    public String getPasswordSalt() {
+        return PasswordSalt;
+    }
+
+    public void setPasswordSalt(String passwordSalt) {
+        PasswordSalt = passwordSalt;
+    }
+
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public static void setUsers(ArrayList<User> users) {
+        User.users = users;
     }
 }
