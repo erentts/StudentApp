@@ -6,6 +6,7 @@ public class Question {
     private String question;
     private ArrayList<String> choices;
     private String answer;
+    public static ArrayList<Question> questions = new ArrayList<Question>();
 
     public Question(String question, ArrayList<String> choices, String answer) {
         this.question = question;
@@ -13,12 +14,20 @@ public class Question {
         this.answer = answer;
     }
 
-    public String getContent() {
+    public String getQuestion() {
         return question;
     }
 
-    public void setContent(String content) {
-        this.question = content;
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public static ArrayList<Question> getQuestions() {
+        return questions;
+    }
+
+    public static void setQuestions(ArrayList<Question> questions) {
+        Question.questions = questions;
     }
 
     public ArrayList<String> getChoices() {

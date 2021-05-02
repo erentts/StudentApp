@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddQuestion">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="160dp"
+        android:text="ADD NEW QUESTION"
+        android:textColor="#011BAC"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/TextQuestion"
+        android:layout_width="273dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="67dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Type a question"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/TextAnswerB"
+        android:layout_width="278dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="67dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Type an answer"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextAnswerA" />
+
+    <EditText
+        android:id="@+id/TextAnswerC"
+        android:layout_width="278dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="67dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Type an answer"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextAnswerB" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="20dp"
+        android:text="Correct answer ?"
+        android:textColor="#011BAC"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextAnswerD" />
+
+    <EditText
+        android:id="@+id/TextAnswerD"
+        android:layout_width="278dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="67dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Type an answer"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextAnswerC" />
+
+    <EditText
+        android:id="@+id/TextAnswerA"
+        android:layout_width="278dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="67dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Type an answer"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextQuestion" />
+
+    <Button
+        android:id="@+id/ButtonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="174dp"
+        android:width="300dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.429"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="280dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="93dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <RadioButton
+            android:id="@+id/CheckA"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:text="A"
+            tools:text="A" />
+
+        <RadioButton
+            android:id="@+id/CheckB"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:text="B"
+            tools:text="B" />
+
+        <RadioButton
+            android:id="@+id/CheckC"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:text="C"
+            tools:text="C" />
+
+        <RadioButton
+            android:id="@+id/CheckD"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:text="D" />
+
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

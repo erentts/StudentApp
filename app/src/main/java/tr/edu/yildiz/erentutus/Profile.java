@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Profile extends AppCompatActivity {
-    private Button buttonLogout;
+    private Button buttonLogout,buttonAddQuestion,buttonListQuestions;
     private TextView textViewMessage;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
@@ -36,11 +36,27 @@ public class Profile extends AppCompatActivity {
                 finish();
             }
         });
+
+        buttonAddQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this,AddQuestion.class));
+            }
+        });
+
+        buttonListQuestions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this,ListQuestions.class));
+            }
+        });
     }
 
     public void getInputs(){
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
         textViewMessage = (TextView) findViewById(R.id.textViewMessage);
+        buttonAddQuestion = (Button) findViewById(R.id.buttonAddQuestion);
+        buttonListQuestions = (Button) findViewById(R.id.buttonListQuestions);
     }
 
     public void getSharedInformation(){
