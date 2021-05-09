@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ExamManager">
+
+    <Button
+        android:id="@+id/ButtonSub"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="21dp"
+        android:width="370dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="271dp"
+        android:text="Difficulty"
+        android:textColor="#011BAC"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TxtPuan" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="280dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="47dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+        <RadioButton
+            android:id="@+id/CheckTwo"
+            android:layout_width="59dp"
+            android:layout_height="30dp"
+            android:text="2"
+            tools:text="2" />
+
+        <RadioButton
+            android:id="@+id/CheckThree"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:text="3"
+            tools:text="3" />
+
+        <RadioButton
+            android:id="@+id/CheckFour"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:orientation="vertical"
+            android:text="4"
+            tools:text="4" />
+
+        <RadioButton
+            android:id="@+id/CheckFive"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:text="5"
+            tools:text="5" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/TxtPuan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="117dp"
+        android:ems="10"
+        android:hint="Question Point"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TxtTime" />
+
+    <EditText
+        android:id="@+id/TxtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="117dp"
+        android:ems="10"
+        android:hint="Exam Time"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="139dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="182dp"
+        android:text="Exam Settings"
+        android:textColor="#3F51B5"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

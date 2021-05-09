@@ -1,12 +1,16 @@
 package tr.edu.yildiz.erentutus.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,9 +32,11 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
 
     private ArrayList<Question> questions;
     Activity activity;
+    Context context;
 
-    public QuestionRecyclerAdapter(ArrayList<Question> questions) {
+    public QuestionRecyclerAdapter(ArrayList<Question> questions,Context context) {
         this.questions = questions;
+        this.context = context;
     }
 
     @NonNull
@@ -45,21 +51,36 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
         holder.QuestionText.setText("Soru : " + questions.get(position).getQuestion());
         holder.AnswerA.setText("A) " + questions.get(position).getChoices().get(0));
         holder.AnswerB.setText("B) " + questions.get(position).getChoices().get(1));
-        holder.AnswerC.setText("C) " + questions.get(position).getChoices().get(2));
-        holder.AnswerD.setText("D) " + questions.get(position).getChoices().get(3));
+        if(!questions.get(position).getChoices().get(2).matches("")){
+            holder.AnswerC.setText("C) " + questions.get(position).getChoices().get(2));
+        }
+        if(!questions.get(position).getChoices().get(3).matches("")){
+            holder.AnswerD.setText("D) " + questions.get(position).getChoices().get(3));
+        }
         holder.CorrectAnswer.setText("Correct Answer : " + questions.get(position).getAnswer());
         holder.ButtonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                questions.remove(position);
-                QuestionRecyclerAdapter.super.notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Deleting An Item");
+                builder.setMessage("Are you sure ?");
+                builder.setNegativeButton("No", null);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        questions.remove(position);
+                        QuestionRecyclerAdapter.super.notifyDataSetChanged();
+                    }
+                });
+                builder.show();
+
             }
         });
         holder.ButtonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //questions.get(position);
-                activity.startActivity(new Intent(activity, UpdateQuestion.class));
+                //activity.startActivity(new Intent(activity, UpdateQuestion.class));
             }
         });
     }

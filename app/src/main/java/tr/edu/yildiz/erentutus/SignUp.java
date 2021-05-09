@@ -1,5 +1,6 @@
 package tr.edu.yildiz.erentutus;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,8 +24,9 @@ import tr.edu.yildiz.erentutus.utilities.PasswordUtils;
 
 public class SignUp extends AppCompatActivity {
     private EditText editTextUsernameSignUp,editTextPasswordSignUp,SignUpEmail,SignUpName,SignUpSurname,SignUpPhone,SignUpBirthdate,Repassword;
-    private TextView textView2;
-    private Button buttonSignUp;
+    private TextView textView2,txtFilePath;
+    private Button buttonSignUp,ButtonChooseFile;
+    Intent myFileIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,15 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         getInputs();
+
+        ButtonChooseFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                myFileIntent.setType("*/*");
+                startActivityForResult(myFileIntent,10);
+            }
+        });
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,13 +78,16 @@ public class SignUp extends AppCompatActivity {
         buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
         textView2 = (TextView) findViewById(R.id.textView2);
         Repassword = (EditText) findViewById(R.id.Repassword);
+        ButtonChooseFile = (Button) findViewById(R.id.ButtonChooseFile);
+        txtFilePath = (TextView) findViewById(R.id.txtFilePath);
     }
 
 
     public boolean isFilled(){
         if(editTextUsernameSignUp.getText().toString().equals("") || editTextPasswordSignUp.getText().toString().equals("") ||
                 SignUpEmail.getText().toString().equals("") || SignUpName.getText().toString().equals("") || SignUpSurname.getText().toString().equals("") ||
-                SignUpPhone.getText().toString().equals("") || SignUpBirthdate.getText().toString().equals("") || Repassword.getText().toString().equals("")
+                SignUpPhone.getText().toString().equals("") || SignUpBirthdate.getText().toString().equals("") || Repassword.getText().toString().equals("") ||
+                txtFilePath.getText().toString().equals("")
         ){
             return false;
         }
@@ -92,13 +106,26 @@ public class SignUp extends AppCompatActivity {
         String email = SignUpEmail.getText().toString();
         String phone = SignUpPhone.getText().toString();
         String birthdate = SignUpBirthdate.getText().toString();
-
+        String photo = txtFilePath.getText().toString();
         // PasswordHash and Password Salt
         String salt = PasswordUtils.getSalt(30);
         String hash = PasswordUtils.generateSecurePassword(password, salt);
 
-        User newUser = new User(name,surname,username,email,phone,birthdate,hash,salt);
+        User newUser = new User(name,surname,username,email,phone,birthdate,photo,hash,salt);
         return newUser;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 10:
+                if (resultCode==RESULT_OK){
+                    String path = data.getData().getPath();
+                    txtFilePath.setText(path);
+                }
+                    break;
+        }
     }
 
     public void clearInputs(){
@@ -110,4 +137,6 @@ public class SignUp extends AppCompatActivity {
         SignUpPhone.setText("");
         SignUpBirthdate.setText("");
     }
+
+
 }

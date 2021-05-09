@@ -41,7 +41,6 @@
                 android:id="@+id/AnswerA"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="TextView"
                 android:textAlignment="textStart" />
         </LinearLayout>
 
@@ -53,8 +52,7 @@
             <TextView
                 android:id="@+id/AnswerB"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
@@ -65,8 +63,7 @@
             <TextView
                 android:id="@+id/AnswerC"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,8 +74,7 @@
             <TextView
                 android:id="@+id/AnswerD"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="TextView" />
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <TextView
@@ -86,6 +82,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#4CAF50" />
+
+        <TextView
+            android:id="@+id/Difficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="#4CAF50" />
 

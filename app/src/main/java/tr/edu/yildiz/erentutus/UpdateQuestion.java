@@ -41,10 +41,10 @@ public class UpdateQuestion extends AppCompatActivity {
         TextAnswerB = (EditText) findViewById(R.id.TextAnswerB);
         TextAnswerC = (EditText) findViewById(R.id.TextAnswerC);
         TextAnswerD = (EditText) findViewById(R.id.TextAnswerD);
-        CheckA = (RadioButton) findViewById(R.id.CheckA);
-        CheckB = (RadioButton) findViewById(R.id.CheckB);
-        CheckC = (RadioButton) findViewById(R.id.CheckC);
-        CheckD = (RadioButton) findViewById(R.id.CheckD);
+        CheckA = (RadioButton) findViewById(R.id.CheckTwo);
+        CheckB = (RadioButton) findViewById(R.id.CheckThree);
+        CheckC = (RadioButton) findViewById(R.id.CheckFour);
+        CheckD = (RadioButton) findViewById(R.id.CheckFive);
     }
 
 

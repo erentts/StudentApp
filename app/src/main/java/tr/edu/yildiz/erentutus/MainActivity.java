@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this,Profile.class));
                     finish();
                     clearInputs();
+                    Toast.makeText(getApplicationContext(),"LogIn Success !",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     errorCount++;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         buttonSignIn.setEnabled(false);
+                        startActivity(new Intent(MainActivity.this,SignUp.class));
+                        finish();
                         Toast.makeText(getApplicationContext(),"You exceed error count : " +errorCount,Toast.LENGTH_SHORT).show();
                         clearInputs();
                     }

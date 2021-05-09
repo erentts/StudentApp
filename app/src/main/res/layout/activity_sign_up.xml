@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="141dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="166dp"
         android:text="Sign Up"
         android:textColor="#3F51B5"
@@ -22,20 +22,59 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/buttonSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="177dp"
+        android:width="370dp"
+        android:text="Sign Up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ButtonChooseFile" />
+
+    <Button
+        android:id="@+id/ButtonChooseFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="26dp"
+        android:text="Choose File"
+        app:layout_constraintEnd_toStartOf="@+id/txtFilePath"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Repassword" />
+
+    <TextView
+        android:id="@+id/txtFilePath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="80dp"
+        android:width="220dp"
+        android:textColor="#3F51B5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ButtonChooseFile"
+        app:layout_constraintTop_toBottomOf="@+id/Repassword" />
+
     <EditText
-        android:id="@+id/editTextUsernameSignUp"
+        android:id="@+id/SignUpName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="117dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUpSurname" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/editTextPasswordSignUp"
@@ -52,48 +91,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SignUpBirthdate" />
 
-    <Button
-        android:id="@+id/buttonSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="177dp"
-        android:text="Sign Up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Repassword" />
-
     <EditText
-        android:id="@+id/SignUpName"
+        android:id="@+id/Repassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="117dp"
         android:ems="10"
-        android:hint="Name"
+        android:hint="Re-password"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordSignUp" />
 
     <EditText
-        android:id="@+id/SignUpSurname"
+        android:id="@+id/SignUpPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="117dp"
         android:ems="10"
-        android:hint="Surname"
+        android:hint="Phone"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUpName" />
+        app:layout_constraintTop_toBottomOf="@+id/SignUpEmail" />
+
+    <EditText
+        android:id="@+id/SignUpBirthdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="Birthdate"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SignUpPhone" />
 
     <EditText
         android:id="@+id/SignUpEmail"
@@ -111,47 +149,33 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextUsernameSignUp" />
 
     <EditText
-        android:id="@+id/SignUpPhone"
+        android:id="@+id/editTextUsernameSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="117dp"
         android:ems="10"
-        android:hint="Phone"
+        android:hint="Username"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUpEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/SignUpSurname" />
 
     <EditText
-        android:id="@+id/SignUpBirthdate"
+        android:id="@+id/SignUpSurname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="117dp"
         android:ems="10"
-        android:hint="Birthdate"
+        android:hint="Surname"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SignUpPhone" />
-
-    <EditText
-        android:id="@+id/Repassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="117dp"
-        android:ems="10"
-        android:hint="Re-password"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordSignUp" />
+        app:layout_constraintTop_toBottomOf="@+id/SignUpName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

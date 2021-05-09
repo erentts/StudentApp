@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import tr.edu.yildiz.erentutus.adapter.QuestionRecyclerAdapter;
@@ -12,6 +13,7 @@ import tr.edu.yildiz.erentutus.entity.Question;
 public class ListQuestions extends AppCompatActivity {
     private RecyclerView RecyclerList;
     private QuestionRecyclerAdapter questionRecyclerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +28,10 @@ public class ListQuestions extends AppCompatActivity {
 
     public void getInput(){
         RecyclerList = (RecyclerView) findViewById(R.id.RecyclerList);
-        questionRecyclerAdapter = new QuestionRecyclerAdapter(Question.questions);
+        questionRecyclerAdapter = new QuestionRecyclerAdapter(Question.questions,ListQuestions.this);
         RecyclerList.setAdapter(questionRecyclerAdapter);
         RecyclerList.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void deleteQuestion(){
 
-    }
 }

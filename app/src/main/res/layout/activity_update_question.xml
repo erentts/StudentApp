@@ -141,21 +141,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <RadioButton
-            android:id="@+id/CheckA"
+            android:id="@+id/CheckTwo"
             android:layout_width="55dp"
             android:layout_height="30dp"
             android:text="A"
             tools:text="A" />
 
         <RadioButton
-            android:id="@+id/CheckB"
+            android:id="@+id/CheckThree"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:text="B"
             tools:text="B" />
 
         <RadioButton
-            android:id="@+id/CheckC"
+            android:id="@+id/CheckFour"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:orientation="vertical"
@@ -163,7 +163,7 @@
             tools:text="C" />
 
         <RadioButton
-            android:id="@+id/CheckD"
+            android:id="@+id/CheckFive"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:text="D" />
