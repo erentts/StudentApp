@@ -27,6 +27,9 @@ import tr.edu.yildiz.erentutus.entity.Question;
 
 import static androidx.core.content.ContextCompat.createDeviceProtectedStorageContext;
 import static androidx.core.content.ContextCompat.startActivity;
+import static tr.edu.yildiz.erentutus.CreateExam.rdfour;
+import static tr.edu.yildiz.erentutus.CreateExam.rdthree;
+import static tr.edu.yildiz.erentutus.CreateExam.rdtwo;
 
 public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapter.MyViewHolder> {
 
@@ -48,16 +51,35 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.QuestionText.setText("Soru : " + questions.get(position).getQuestion());
-        holder.AnswerA.setText("A) " + questions.get(position).getChoices().get(0));
-        holder.AnswerB.setText("B) " + questions.get(position).getChoices().get(1));
-        if(!questions.get(position).getChoices().get(2).matches("")){
-            holder.AnswerC.setText("C) " + questions.get(position).getChoices().get(2));
+        holder.setIsRecyclable(false);
+        if(2 == questions.get(position).getChoices().size()){
+            holder.QuestionText.setText("Soru : " + questions.get(position).getQuestion());
+            holder.AnswerA.setText("A) " + questions.get(position).getChoices().get(0));
+            holder.AnswerB.setText("B) " + questions.get(position).getChoices().get(1));
+            holder.CorrectAnswer.setText("Correct Answer : " + questions.get(position).getAnswer());
         }
-        if(!questions.get(position).getChoices().get(3).matches("")){
-            holder.AnswerD.setText("D) " + questions.get(position).getChoices().get(3));
+
+        if(3 == questions.get(position).getChoices().size()){
+            holder.QuestionText.setText("Soru : " + questions.get(position).getQuestion());
+            holder.AnswerA.setText("A) " + questions.get(position).getChoices().get(0));
+            holder.AnswerB.setText("B) " + questions.get(position).getChoices().get(1));
+            if(!questions.get(position).getChoices().get(2).matches("")){
+                holder.AnswerC.setText("C) " + questions.get(position).getChoices().get(2));
+            }
+            holder.CorrectAnswer.setText("Correct Answer : " + questions.get(position).getAnswer());
         }
-        holder.CorrectAnswer.setText("Correct Answer : " + questions.get(position).getAnswer());
+        if(4 == questions.get(position).getChoices().size()){
+            holder.QuestionText.setText("Soru : " + questions.get(position).getQuestion());
+            holder.AnswerA.setText("A) " + questions.get(position).getChoices().get(0));
+            holder.AnswerB.setText("B) " + questions.get(position).getChoices().get(1));
+            if(!questions.get(position).getChoices().get(2).matches("")){
+                holder.AnswerC.setText("C) " + questions.get(position).getChoices().get(2));
+            }
+            if(!questions.get(position).getChoices().get(3).matches("")){
+                holder.AnswerD.setText("D) " + questions.get(position).getChoices().get(3));
+            }
+            holder.CorrectAnswer.setText("Correct Answer : " + questions.get(position).getAnswer());
+        }
         holder.ButtonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,8 +101,9 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
         holder.ButtonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //questions.get(position);
-                //activity.startActivity(new Intent(activity, UpdateQuestion.class));
+                Intent intent = new Intent(context, UpdateQuestion.class);
+                intent.putExtra("update",position);
+                context.startActivity(intent);
             }
         });
     }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -13,8 +14,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import tr.edu.yildiz.erentutus.adapter.ExamScreenRecyclerAdapter;
 import tr.edu.yildiz.erentutus.adapter.QuestionRecyclerAdapter;
@@ -46,6 +52,7 @@ public class CreateExam extends AppCompatActivity {
         examDifficulty = sp.getString("difficulty","no difficulty");
         fillInputs(examTime,examPoint,examDifficulty);
         initialize();
+        writeStringAsFile();
 
 
         rdtwo.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +158,25 @@ public class CreateExam extends AppCompatActivity {
         RecyclerList.setAdapter(examScreenRecyclerAdapter);
         RecyclerList.setLayoutManager(new LinearLayoutManager(CreateExam.this));
         examScreenRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    public void writeStringAsFile() {
+        try {
+            String MYFILE = "my_file";
+            String strText = "My text";
+
+            // MODE_APPEND, MODE_WORLD_READABLE, MODE_WORLD_WRITEABLE
+            // create new file or rewrite existing
+            //FileOutputStream fos = openFileOutput(MYFILE, getApplicationContext().MODE_PRIVATE);
+            // append to file
+            FileOutputStream fos = openFileOutput(MYFILE, getApplicationContext().MODE_PRIVATE);
+
+            fos.write(strText.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.toString();
+        }
+
     }
 
 }

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -30,6 +31,7 @@ public class Profile extends AppCompatActivity {
     private String username;
     private ImageView Thumbnail;
     String examTime,examPoint,examDifficulty;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,8 @@ public class Profile extends AppCompatActivity {
         examTime = sp.getString("time","no time");
         examPoint = sp.getString("point","no point");
         examDifficulty = sp.getString("difficulty","no difficulty");
-        Thumbnail.setImageResource(R.drawable.five);
-
+        getThumbnailPath(username);
+        Thumbnail.setImageBitmap(bitmap);
 
         textViewMessage.setText("Hi, "+ username);
         //textViewMessage.setText(getThumbnailPath(username));
@@ -89,9 +91,6 @@ public class Profile extends AppCompatActivity {
                 startActivity(new Intent(Profile.this,CreateExam.class));
             }
         });
-
-
-
     }
 
     public void getInputs(){
@@ -109,14 +108,11 @@ public class Profile extends AppCompatActivity {
         editor = sp.edit();
     }
 
-    public String getThumbnailPath(String username){
-        final String[] x = new String[1];
+    public void getThumbnailPath(String username){
         User.users.forEach((data)-> {
             if(username.toString().equals(data.getUsername())){
-                x[0] = data.getPhoto();
+                bitmap = BitmapFactory.decodeByteArray(data.getPhoto(),0,data.getPhoto().length);
             }
         });
-        return x[0];
     }
-
 }

@@ -9,12 +9,12 @@ public class User {
     private String Email;
     private String Phone;
     private String BirthDate;
-    private String Photo;
+    private byte[] Photo;
     private String PasswordHash;
     private String PasswordSalt;
     public static ArrayList<User> users = new ArrayList<User>();
 
-    public User(String name, String surname, String username, String email, String phone, String birthDate, String photo, String passwordHash, String passwordSalt) {
+    public User(String name, String surname, String username, String email, String phone, String birthDate, byte[] photo, String passwordHash, String passwordSalt) {
         Name = name;
         Surname = surname;
         Username = username;
@@ -74,11 +74,11 @@ public class User {
         this.BirthDate = birthDate;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return Photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         Photo = photo;
     }
 

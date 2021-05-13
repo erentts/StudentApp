@@ -41,8 +41,7 @@ public class ExamScreenRecyclerAdapter extends RecyclerView.Adapter<ExamScreenRe
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
-
+            holder.setIsRecyclable(false);
             if(rdtwo.isChecked() && 2 == questions.get(position).getChoices().size()){
                 holder.QuestionText.setText("Soru : " + questions.get(position).getQuestion());
                 holder.AnswerA.setText("A) " + questions.get(position).getChoices().get(0));
@@ -71,7 +70,6 @@ public class ExamScreenRecyclerAdapter extends RecyclerView.Adapter<ExamScreenRe
                 }
                 holder.CorrectAnswer.setText("Correct Answer : " + questions.get(position).getAnswer());
             }
-
     }
 
     @Override
