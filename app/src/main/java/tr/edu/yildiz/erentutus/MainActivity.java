@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
+import tr.edu.yildiz.erentutus.database.Database;
 import tr.edu.yildiz.erentutus.entity.User;
 import tr.edu.yildiz.erentutus.utilities.PasswordUtils;
 
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private String username,passwordHash,passwordSalt,name,surname,phone,email,birthdate;
     private DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private int errorCount = 0;
+    private Database database;
+
 
 
 
@@ -37,13 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         getInputs();
         getSharedInformation();
+        database = new Database(this);
+
 
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = editTextUsername.getText().toString();
                 String password = editTextPassword.getText().toString();
-                if(userCheckLogin(username,password)){
+                if(UserMatch(getData(),username,password)){
                     editor.putString("username",username);
                     editor.commit();
                     startActivity(new Intent(MainActivity.this,Profile.class));
@@ -112,4 +119,21 @@ public class MainActivity extends AppCompatActivity {
         editTextUsername.setText("");
         editTextPassword.setText("");
     }
+
+    private String[] columns={"Username","PasswordHash","PasswordSalt"};
+    private Cursor getData(){
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.query("User",columns,null,null,null,null,null);
+        return cursor;
+    }
+    private boolean UserMatch(Cursor cursor,String userName,String password){
+        while(cursor.moveToNext()) {
+            if(userName.equals(cursor.getString(cursor.getColumnIndex("Username"))) &&
+                    PasswordUtils.verifyUserPassword(password,cursor.getString(cursor.getColumnIndex("PasswordHash")),cursor.getString(cursor.getColumnIndex("PasswordSalt")))){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

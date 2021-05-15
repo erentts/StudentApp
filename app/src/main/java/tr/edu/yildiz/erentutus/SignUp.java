@@ -3,8 +3,11 @@ package tr.edu.yildiz.erentutus;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
@@ -27,6 +30,7 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import tr.edu.yildiz.erentutus.database.Database;
 import tr.edu.yildiz.erentutus.entity.User;
 import tr.edu.yildiz.erentutus.utilities.PasswordUtils;
 
@@ -39,6 +43,8 @@ public class SignUp extends AppCompatActivity {
     private Bitmap selectedImageBitmap;
     private ImageView photo;
     Intent myFileIntent;
+    private Database database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,7 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         getInputs();
+        database = new Database(this);
 
         ButtonChooseFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,12 +72,29 @@ public class SignUp extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Passwords have not been matched !",Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        User user = createUser();
+
+                        try{
+                            String username = editTextUsernameSignUp.getText().toString();
+                            if(UserMatch(getData(),username)){
+                                createUser();
+                                Intent intent = new Intent(SignUp.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(getApplicationContext(),"Username is available..", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }finally{
+                            database.close();
+                        }
+
+
+                        /*User user = createUser();
                         User.users.add(user);
                         //carryToMainActivity(user);
                         startActivity(new Intent(SignUp.this,MainActivity.class));
                         finish();
-                        clearInputs();
+                        clearInputs();*/
                     }
                 }
                 else{
@@ -112,7 +136,7 @@ public class SignUp extends AppCompatActivity {
         return password.equals(rePassword) ? true : false;
     }
 
-    public User createUser(){
+    public void createUser(){
         String name = SignUpName.getText().toString();
         String surname = SignUpSurname.getText().toString();
         String username = editTextUsernameSignUp.getText().toString();
@@ -125,8 +149,24 @@ public class SignUp extends AppCompatActivity {
         String salt = PasswordUtils.getSalt(30);
         String hash = PasswordUtils.generateSecurePassword(password, salt);
 
-        User newUser = new User(name,surname,username,email,phone,birthdate,photo,hash,salt);
-        return newUser;
+
+        SQLiteDatabase db = database.getWritableDatabase();
+        ContentValues information = new ContentValues();
+
+        information.put("Name",name);
+        information.put("Surname",surname);
+        information.put("Username",username);
+        information.put("PasswordHash",hash);
+        information.put("Email",email);
+        information.put("Phone",phone);
+        information.put("Birthdate",birthdate);
+        information.put("Photo",photo);
+        information.put("PasswordSalt",salt);
+        db.insertOrThrow("User",null,information);
+
+
+        /*User newUser = new User(name,surname,username,email,phone,birthdate,photo,hash,salt);*/
+        //return newUser;
     }
 
     @Override
@@ -171,5 +211,21 @@ public class SignUp extends AppCompatActivity {
         byte[] bytes = byteArrayOutputStream.toByteArray();
         return bytes;
     }
+
+    private String[] columns={"username"};
+    private Cursor getData(){
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.query("User",columns,null,null,null,null,null);
+        return cursor;
+    }
+    private boolean UserMatch(Cursor cursor,String userName){
+        while(cursor.moveToNext()) {
+            if(userName.equals(cursor.getString(cursor.getColumnIndex("Username")))){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }

@@ -2,8 +2,13 @@ package tr.edu.yildiz.erentutus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import tr.edu.yildiz.erentutus.database.Database;
 import tr.edu.yildiz.erentutus.entity.Question;
 
 public class UpdateQuestion extends AppCompatActivity {
@@ -19,6 +25,11 @@ public class UpdateQuestion extends AppCompatActivity {
     private Button ButtonSave;
     private RadioButton CheckA,CheckB,CheckC,CheckD,rdtwo,rdthree,rdfour;
     private int position;
+    private Database database;
+    private String questionName;
+    SharedPreferences sp;
+    SharedPreferences.Editor speditor;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +37,21 @@ public class UpdateQuestion extends AppCompatActivity {
         setContentView(R.layout.activity_update_question);
 
         getInputs();
+        getSharedInformation();
         Intent intent = getIntent();
+        database = new Database(this);
         position = intent.getIntExtra("update",0);
+        questionName = intent.getStringExtra("questionName");
+        userName = sp.getString("username","no username");
+        getQuestionInformation(getData(),questionName);
 
-        fillInputs();
+        //fillInputs();
 
         ButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isFilled()){
-                    addQuestion();
+                    addQuestion(questionName);
                     Intent intent = new Intent(UpdateQuestion.this, ListQuestions.class);
                     startActivity(intent);
                     finish();
@@ -96,6 +112,10 @@ public class UpdateQuestion extends AppCompatActivity {
         rdfour = (RadioButton) findViewById(R.id.rdfour);
     }
 
+    public void getSharedInformation(){
+        sp = getSharedPreferences("LogInInformation",MODE_PRIVATE);
+        speditor = sp.edit();
+    }
 
     public boolean isFilled(){
         if(TextQuestion.getText().toString().equals("") || TextAnswerA.getText().toString().equals("") ||
@@ -120,28 +140,29 @@ public class UpdateQuestion extends AppCompatActivity {
         return "D";
     }
 
-    public void addQuestion(){
-        ArrayList<String> choices = new ArrayList<String>();
-
-        if(rdtwo.isChecked()){
-            choices.add(TextAnswerA.getText().toString());
-            choices.add(TextAnswerB.getText().toString());
+    public void addQuestion(String questionName){
+        SQLiteDatabase db = database.getWritableDatabase();
+        ContentValues information = new ContentValues();
+        information.put("question", TextQuestion.getText().toString());
+        if (rdtwo.isChecked()) {
+            information.put("choiceOne", TextAnswerA.getText().toString());
+            information.put("choiceTwo", TextAnswerB.getText().toString());
+            information.put("choiceCount", "2");
+        } else if (rdthree.isChecked()) {
+            information.put("choiceOne", TextAnswerA.getText().toString());
+            information.put("choiceTwo", TextAnswerB.getText().toString());
+            information.put("choiceThree", TextAnswerC.getText().toString());
+            information.put("choiceCount", "3");
+        } else if (rdfour.isChecked()) {
+            information.put("choiceOne", TextAnswerA.getText().toString());
+            information.put("choiceTwo", TextAnswerB.getText().toString());
+            information.put("choiceThree", TextAnswerC.getText().toString());
+            information.put("choiceFour", TextAnswerD.getText().toString());
+            information.put("choiceCount", "4");
         }
-        else if(rdthree.isChecked()){
-            choices.add(TextAnswerA.getText().toString());
-            choices.add(TextAnswerB.getText().toString());
-            choices.add(TextAnswerC.getText().toString());
-        }
-        else if(rdfour.isChecked()) {
-            choices.add(TextAnswerA.getText().toString());
-            choices.add(TextAnswerB.getText().toString());
-            choices.add(TextAnswerC.getText().toString());
-            choices.add(TextAnswerD.getText().toString());
-        }
-        Question.questions.get(position).setQuestion(TextQuestion.getText().toString());
-        Question.questions.get(position).setChoices(choices);
-        Question.questions.get(position).setAnswer(isCheck());
-
+        information.put("userFK", userName);
+        information.put("answer", isCheck());
+        db.update("Question",information,"question"+"=?",new String[]{questionName});
     }
 
     public boolean C(){
@@ -213,6 +234,66 @@ public class UpdateQuestion extends AppCompatActivity {
         }
         else{
             CheckD.setChecked(true);
+        }
+    }
+
+
+    private String[] columns={"question","choiceOne","choiceTwo","choiceThree","choiceFour","answer","choiceCount","userFK"};
+    private Cursor getData(){
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.query("Question",columns,null,null,null,null,null);
+        return cursor;
+    }
+
+    private void getQuestionInformation(Cursor cursor, String qname){
+        while(cursor.moveToNext()) {
+            if(qname.equals(cursor.getString(cursor.getColumnIndex("question")))){
+                TextQuestion.setText(cursor.getString(cursor.getColumnIndex("question")));
+                String temp = cursor.getString(cursor.getColumnIndex("choiceCount"));
+                if(temp.equals("2")){
+                    rdtwo.setChecked(true);
+                    TextAnswerC.setEnabled(false);
+                    TextAnswerD.setEnabled(false);
+                    TextAnswerC.setText(null);
+                    TextAnswerD.setText(null);
+                    CheckC.setEnabled(false);
+                    CheckD.setEnabled(false);
+                    CheckA.setChecked(true);
+                    TextAnswerA.setText(cursor.getString(cursor.getColumnIndex("choiceOne")));
+                    TextAnswerB.setText(cursor.getString(cursor.getColumnIndex("choiceTwo")));
+                }else if(temp.equals("3")){
+                    rdthree.setChecked(true);
+                    TextAnswerC.setEnabled(true);
+                    TextAnswerD.setEnabled(false);
+                    TextAnswerD.setText(null);
+                    CheckC.setEnabled(true);
+                    CheckD.setEnabled(false);
+                    CheckA.setChecked(true);
+                    TextAnswerA.setText(cursor.getString(cursor.getColumnIndex("choiceOne")));
+                    TextAnswerB.setText(cursor.getString(cursor.getColumnIndex("choiceTwo")));
+                    TextAnswerC.setText(cursor.getString(cursor.getColumnIndex("choiceThree")));
+                }else if(temp.equals("4")){
+                    rdfour.setChecked(true);
+                    TextAnswerC.setEnabled(true);
+                    TextAnswerD.setEnabled(true);
+                    CheckC.setEnabled(true);
+                    CheckD.setEnabled(true);
+                    CheckA.setChecked(true);
+                    TextAnswerA.setText(cursor.getString(cursor.getColumnIndex("choiceOne")));
+                    TextAnswerB.setText(cursor.getString(cursor.getColumnIndex("choiceTwo")));
+                    TextAnswerC.setText(cursor.getString(cursor.getColumnIndex("choiceThree")));
+                    TextAnswerD.setText(cursor.getString(cursor.getColumnIndex("choiceFour")));
+                }
+                if(CheckA.getText().toString().equals(cursor.getString(cursor.getColumnIndex("answer")))){
+                    CheckA.setChecked(true);
+                }else if(CheckB.getText().toString().equals(cursor.getString(cursor.getColumnIndex("answer")))){
+                    CheckB.setChecked(true);
+                }else if(CheckC.getText().toString().equals(cursor.getString(cursor.getColumnIndex("answer")))){
+                    CheckC.setChecked(true);
+                }else if(CheckD.getText().toString().equals(cursor.getString(cursor.getColumnIndex("answer")))){
+                    CheckD.setChecked(true);
+                }
+            }
         }
     }
 }

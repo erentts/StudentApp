@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import tr.edu.yildiz.erentutus.R;
 import tr.edu.yildiz.erentutus.entity.Question;
 
+import static tr.edu.yildiz.erentutus.CreateExam.questionsTwo;
 import static tr.edu.yildiz.erentutus.CreateExam.rdfour;
 import static tr.edu.yildiz.erentutus.CreateExam.rdthree;
 import static tr.edu.yildiz.erentutus.CreateExam.rdtwo;
@@ -25,6 +28,7 @@ public class ExamScreenRecyclerAdapter extends RecyclerView.Adapter<ExamScreenRe
 
     private ArrayList<Question> questions;
     Activity activity;
+
 
     public ExamScreenRecyclerAdapter(ArrayList<Question> questions) {
         this.questions = questions;
@@ -70,6 +74,19 @@ public class ExamScreenRecyclerAdapter extends RecyclerView.Adapter<ExamScreenRe
                 }
                 holder.CorrectAnswer.setText("Correct Answer : " + questions.get(position).getAnswer());
             }
+
+            holder.checkQuestion.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        questionsTwo.add(questions.get(position));
+                    }
+                    else{
+                        questionsTwo.remove(questions.get(position));
+                    }
+                }
+            });
+
     }
 
     @Override
@@ -80,6 +97,7 @@ public class ExamScreenRecyclerAdapter extends RecyclerView.Adapter<ExamScreenRe
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView QuestionText, AnswerA, AnswerB, AnswerC, AnswerD, CorrectAnswer;
+        CheckBox checkQuestion;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +107,7 @@ public class ExamScreenRecyclerAdapter extends RecyclerView.Adapter<ExamScreenRe
             AnswerC = itemView.findViewById(R.id.AnswerC);
             AnswerD = itemView.findViewById(R.id.AnswerD);
             CorrectAnswer = itemView.findViewById(R.id.CorrectAnswer);
+            checkQuestion = itemView.findViewById(R.id.checkQuestion);
         }
     }
 }

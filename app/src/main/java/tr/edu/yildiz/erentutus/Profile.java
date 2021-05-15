@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicReference;
 
+import tr.edu.yildiz.erentutus.database.Database;
 import tr.edu.yildiz.erentutus.entity.User;
 
 public class Profile extends AppCompatActivity {
@@ -32,6 +36,7 @@ public class Profile extends AppCompatActivity {
     private ImageView Thumbnail;
     String examTime,examPoint,examDifficulty;
     private Bitmap bitmap;
+    private Database database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +45,15 @@ public class Profile extends AppCompatActivity {
 
         getInputs();
         getSharedInformation();
-
         username = sp.getString("username","no username");
         examTime = sp.getString("time","no time");
         examPoint = sp.getString("point","no point");
         examDifficulty = sp.getString("difficulty","no difficulty");
+        database = new Database(this);
+        GetPhoto(getData(),username);
+
+
+
         getThumbnailPath(username);
         Thumbnail.setImageBitmap(bitmap);
 
@@ -115,4 +124,22 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
+
+    private String[] columns={"Username","Name","Surname","Photo"};
+    private Cursor getData(){
+        SQLiteDatabase db = database.getReadableDatabase();
+        Cursor cursor = db.query("User",columns,null,null,null,null,null);
+        return cursor;
+    }
+    private void GetPhoto(Cursor cursor,String userName){
+        while(cursor.moveToNext()) {
+            if(userName.equals(cursor.getString(cursor.getColumnIndex("Username")))){
+                textViewMessage.setText("Hi, "+cursor.getString(cursor.getColumnIndex("Name")));
+                byte[] bytes = cursor.getBlob(cursor.getColumnIndex("Photo"));
+                bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                Thumbnail.setImageBitmap(bitmap);
+            }
+        }
+    }
+
 }

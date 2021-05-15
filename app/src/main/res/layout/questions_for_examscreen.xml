@@ -7,8 +7,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstLay"
-        android:layout_width="415dp"
-        android:layout_height="204dp"
+        android:layout_width="414dp"
+        android:layout_height="238dp"
         android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="352dp"
-            android:layout_height="199dp"
+            android:layout_height="234dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="28dp"
             android:background="@android:drawable/editbox_dropdown_light_frame"
@@ -90,8 +90,23 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textColor="#4CAF50" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:orientation="vertical">
 
+                <CheckBox
+                    android:id="@+id/checkQuestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="75dp"
+                    android:text="Select this question"
+                    android:textColor="#3F51B5"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

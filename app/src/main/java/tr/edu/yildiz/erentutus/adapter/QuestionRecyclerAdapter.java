@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +25,10 @@ import tr.edu.yildiz.erentutus.Profile;
 import tr.edu.yildiz.erentutus.R;
 import tr.edu.yildiz.erentutus.SignUp;
 import tr.edu.yildiz.erentutus.UpdateQuestion;
+import tr.edu.yildiz.erentutus.database.Database;
 import tr.edu.yildiz.erentutus.entity.Question;
 
+import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.ContextCompat.createDeviceProtectedStorageContext;
 import static androidx.core.content.ContextCompat.startActivity;
 import static tr.edu.yildiz.erentutus.CreateExam.rdfour;
@@ -36,6 +40,10 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
     private ArrayList<Question> questions;
     Activity activity;
     Context context;
+    SharedPreferences.Editor speditor;
+    SharedPreferences sp;
+    private Database database;
+    String username;
 
     public QuestionRecyclerAdapter(ArrayList<Question> questions,Context context) {
         this.questions = questions;
@@ -51,6 +59,10 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        getSharedInformation();
+        username = sp.getString("username","not defined.");
+        database = new Database(context);
+
         holder.setIsRecyclable(false);
         if(2 == questions.get(position).getChoices().size()){
             holder.QuestionText.setText("Soru : " + questions.get(position).getQuestion());
@@ -90,6 +102,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        removeQuestion(questions.get(position).getQuestion());
                         questions.remove(position);
                         QuestionRecyclerAdapter.super.notifyDataSetChanged();
                     }
@@ -103,6 +116,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
             public void onClick(View v) {
                 Intent intent = new Intent(context, UpdateQuestion.class);
                 intent.putExtra("update",position);
+                intent.putExtra("questionName",questions.get(position).getQuestion());
                 context.startActivity(intent);
             }
         });
@@ -126,5 +140,16 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
             ButtonUpdate = itemView.findViewById(R.id.ButtonUpdate);
             ButtonRemove = itemView.findViewById(R.id.ButtonRemove);
         }
+    }
+
+    public void getSharedInformation(){
+        sp = context.getSharedPreferences("LogInInformation",MODE_PRIVATE);
+        speditor = sp.edit();
+    }
+
+    private void removeQuestion(String questionname)
+    {
+        SQLiteDatabase db=database.getReadableDatabase();
+        db.delete("Question","question"+"=?",new String[]{questionname});
     }
 }
