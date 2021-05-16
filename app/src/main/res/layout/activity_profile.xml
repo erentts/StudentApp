@@ -14,15 +14,17 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="76dp"
         android:text="Karşılama Mesajı"
+        android:textColor="#3F51B5"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Thumbnail"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonAddQuestion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="304dp"
+        android:layout_height="73dp"
         android:layout_marginStart="54dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="53dp"
@@ -54,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="69dp"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="53dp"
         android:width="300dp"
         android:height="65dp"

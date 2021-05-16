@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,14 +53,11 @@ public class CreateExam extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_exam);
-        rdtwo = (RadioButton) findViewById(R.id.rdtwo);
-        rdthree = (RadioButton) findViewById(R.id.rdthree);
-        rdfour = (RadioButton) findViewById(R.id.rdfour);
-        TxtExamTime = (EditText) findViewById(R.id.TxtExamTime);
-        TxtPoint = (EditText) findViewById(R.id.TxtPoint);
-        ButtonSubmit = (Button) findViewById(R.id.ButtonSubmit);
+
+        getInputs();
         getSharedInformation();
         database = new Database(this);
+
         examTime = sp.getString("time","no time");
         examPoint = sp.getString("point","no point");
         examDifficulty = sp.getString("difficulty","no difficulty");
@@ -76,6 +74,7 @@ public class CreateExam extends AppCompatActivity {
                 String fileContents = fileOperations(examTime,examPoint,examDifficulty);
                 try(FileOutputStream fos = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE)){
                     fos.write(fileContents.getBytes());
+                    Toast.makeText(getApplicationContext(),"Saved to File !",Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -95,6 +94,7 @@ public class CreateExam extends AppCompatActivity {
                 RecyclerList.setLayoutManager(new LinearLayoutManager(CreateExam.this));
                 examScreenRecyclerAdapter.notifyDataSetChanged();
                 questionsTwo.clear();
+                examDifficulty = "2";
             }
         });
         rdthree.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +107,8 @@ public class CreateExam extends AppCompatActivity {
                 RecyclerList.setLayoutManager(new LinearLayoutManager(CreateExam.this));
                 examScreenRecyclerAdapter.notifyDataSetChanged();
                 questionsTwo.clear();
+                examDifficulty = "3";
+
             }
         });
         rdfour.setOnClickListener(new View.OnClickListener() {
@@ -119,10 +121,19 @@ public class CreateExam extends AppCompatActivity {
                 RecyclerList.setLayoutManager(new LinearLayoutManager(CreateExam.this));
                 examScreenRecyclerAdapter.notifyDataSetChanged();
                 questionsTwo.clear();
+                examDifficulty = "4";
             }
         });
     }
 
+    public void getInputs(){
+        rdtwo = (RadioButton) findViewById(R.id.rdtwo);
+        rdthree = (RadioButton) findViewById(R.id.rdthree);
+        rdfour = (RadioButton) findViewById(R.id.rdfour);
+        TxtExamTime = (EditText) findViewById(R.id.TxtExamTime);
+        TxtPoint = (EditText) findViewById(R.id.TxtPoint);
+        ButtonSubmit = (Button) findViewById(R.id.ButtonSubmit);
+    }
 
     public ArrayList<Question> createList(){
 
@@ -194,8 +205,8 @@ public class CreateExam extends AppCompatActivity {
 
     public String fileOperations(String time, String point, String difficulty){
         String text = "";
-        text += "Time\t|\tPoint\t|\tDifficulty\n";
-        text += time+"\t\t\t"+point+"\t\t\t"+difficulty+"\n\n";
+        text += "Time ---> "+time+" minutes\nPoint --->"+point+" point\nDifficulty ---> "+difficulty+"\n\n";
+        //text += time+"\t\t\t"+point+"\t\t\t"+difficulty+"\n\n";
 
         for(Question question: questionsTwo){
             text += "*******Question*********\n"+question.getQuestion()+"\n********Answers********\nCorrect Answer : '"+question.getAnswer()+"')\n\n";

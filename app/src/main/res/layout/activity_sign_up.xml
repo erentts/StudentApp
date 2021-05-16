@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
         android:layout_marginTop="32dp"
-        android:text="Choose File"
+        android:text="Choose Photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Repassword" />
 

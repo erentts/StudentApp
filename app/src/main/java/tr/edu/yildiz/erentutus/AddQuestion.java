@@ -40,9 +40,10 @@ public class AddQuestion extends AppCompatActivity {
             public void onClick(View v) {
                 if(isFilled()){
                     AddQuestion();
+                    Toast.makeText(getApplicationContext(),"Question has been added",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"It should not be empty",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"It should not be empty !",Toast.LENGTH_SHORT).show();
                 }
             }
         });
