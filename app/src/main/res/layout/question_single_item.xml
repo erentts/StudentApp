@@ -7,8 +7,8 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="362dp"
-        android:layout_height="305dp"
+        android:layout_width="363dp"
+        android:layout_height="347dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="28dp"
         android:background="@android:drawable/editbox_dropdown_light_frame"
@@ -21,16 +21,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="75dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/QuestionText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="72dp"
                 android:text="TextView"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
